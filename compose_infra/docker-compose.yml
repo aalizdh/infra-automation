@@ -9,14 +9,15 @@ services:
       - backend_net
 
   db:
-    image: postgres:16-alpine
+    image: mariadb:11
     container_name: internal_db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secretpassword
-      POSTGRES_DB: appdb
+      MYSQL_ROOT_PASSWORD: faithesofjeter
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 852456
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
     networks:
       - backend_net
 
