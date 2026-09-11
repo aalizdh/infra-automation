@@ -1,0 +1,30 @@
+services:
+  web_proxy:
+    image: nginx:alpine
+    container_name: edge_proxy
+    ports:
+      - "80:80"
+    networks:
+      - frontend_net
+      - backend_net
+
+  db:
+    image: postgres:16-alpine
+    container_name: internal_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: appdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend_net
+
+networks:
+  frontend_net:
+    driver: bridge
+  backend_net:
+    driver: bridge
+
+volumes:
+  db_data:
