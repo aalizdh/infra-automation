@@ -38,6 +38,18 @@ services:
     networks:
       - backend_net
 
+  uptime_kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime_kuma
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - kuma_data:/app/data
+    networks:
+      - frontend_net
+      - backend_net
+
 networks:
   frontend_net:
     driver: bridge
@@ -46,3 +58,4 @@ networks:
 
 volumes:
   db_data:
+  kuma_data:
