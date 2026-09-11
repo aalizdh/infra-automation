@@ -6,16 +6,29 @@ services:
       - "80:80"
     networks:
       - frontend_net
+
+  app:
+    build: ./app
+    container_name: backend_app
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    networks:
+      - frontend_net
       - backend_net
 
   db:
     image: mariadb:11
     container_name: internal_db
     environment:
-      MYSQL_ROOT_PASSWORD: faithesofjeter
-      MYSQL_DATABASE: appdb
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: 852456
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
     volumes:
       - db_data:/var/lib/mysql
     networks:
